@@ -1,0 +1,10 @@
+<div class="container">
+    <div *ngIf="data">
+        <ul *ngFor="let employee of data.data">
+            <li>{{employee.id}}</li>
+            <li>{{employee.employee_name}}</li>
+            <li>{{employee.employee_age}}</li>
+            <li>{{employee.profile_image}}</li>
+        </ul>
+    </div>
+</div>
