@@ -6,21 +6,32 @@ import { Employee } from '../model/employee';
 import { catchError, retry } from 'rxjs/operators';
 import { Data } from '@angular/router';
 import { map } from 'rxjs/operators';
+import { HttpErrorService, HandleError } from './http-error.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class EmployeeService {
-
-  constructor(private http: HttpClient) { }
+  private handleError: HandleError;
+  constructor(
+    private http: HttpClient,
+    private httpErrorHandler: HttpErrorService
+  ) {
+    this.handleError = httpErrorHandler.createHandleError('EmployeeService');
+  }
 
   host = configuration.host;
   employees = configuration.endpoints.employees;
+  create = configuration.endpoints.create;
 
-  getAllEmployees(): Observable<Data[]>{
-    return this.http.get<Data[]>(`${this.host}${this.employees}`)
-    .pipe(
-      retry(3)
-    );
+  getAllEmployees(): Observable<Data[]> {
+    return this.http
+      .get<Data[]>(`${this.host}${this.employees}`)
+      .pipe(retry(3), catchError(this.handleError('getEmployees', [])));
+  }
+  createEmployee(employee: Employee): Observable<Employee> {
+    return this.http
+      .post<Employee>(`${this.host}${this.create}`, employee)
+      .pipe(catchError(this.handleError('addEmployee', employee)));
   }
 }

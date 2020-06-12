@@ -1,4 +1,6 @@
 <div class="container">
+    <br>
+    <button class="btn btn-primary" routerLink="/add-employee" >New Employee</button>
     <div *ngIf="data">
         <ul *ngFor="let employee of data.data">
             <li>{{employee.id}}</li>
