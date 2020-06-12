@@ -21,8 +21,8 @@ export class EmployeeService {
   }
 
   host = configuration.host;
-  employees = configuration.endpoints.employees;
-  create = configuration.endpoints.create;
+  employees = configuration.endpoints.getEmployees;
+  create = configuration.endpoints.createEmployee;
 
   getAllEmployees(): Observable<Data[]> {
     return this.http

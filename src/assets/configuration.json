@@ -1,7 +1,7 @@
 {
     "host":"http://dummy.restapiexample.com/api/v1",
     "endpoints":{
-        "employees":"/employees",
-        "create":"/create"
+        "getEmployees":"/employees",
+        "createEmployee":"/create"
     }
 }
